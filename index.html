@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#FFFCF6">
+<title>PROJECT MOMIJI 26｜名古屋楓紅作戰計畫</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Zen+Maru+Gothic:wght@400;500;600;700;800;900&display=swap');
+:root{
+ --paper:#FFFCF6;--ink:#3E3A39;--coral:#F2A497;--yellow:#F6D27A;
+ --blue:#A8D3E6;--green:#B9DAA5;--white:#fffefa;--muted:#827b73;
+ --line:3px solid var(--ink);--radius:27px;--shadow:5px 5px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Nunito","Zen Maru Gothic","Noto Sans TC",sans-serif;font-weight:600;line-height:1.65}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.topbar{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:3px solid var(--ink)}
+.nav{max-width:1080px;margin:auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:900;font-size:13px;letter-spacing:.08em;white-space:nowrap}
+.navlinks{display:flex;gap:5px;overflow:auto;scrollbar-width:none}
+.navlinks a{font-size:12px;text-decoration:none;padding:7px 10px;border:2px solid transparent;border-radius:99px;white-space:nowrap}
+.navlinks a:hover{border-color:var(--ink);background:var(--yellow)}
+main{max-width:1080px;margin:auto;padding:20px 15px 65px}
+.hero{border:var(--line);border-radius:34px;background:var(--blue);overflow:hidden;position:relative;box-shadow:var(--shadow);min-height:365px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center}
+.hero-copy{padding:32px 28px;position:relative;z-index:2}
+.kicker{display:inline-block;background:var(--yellow);border:2px solid var(--ink);border-radius:99px;padding:5px 12px;font-size:11px;letter-spacing:.12em}
+h1{font-size:clamp(36px,7vw,64px);line-height:1.02;margin:18px 0 10px;font-weight:900;letter-spacing:-.03em}
+h1 span{display:block;font-size:.43em;letter-spacing:.08em;margin-top:12px}
+.hero-copy p{font-size:14px;max-width:440px;margin:14px 0;color:#3e3a39}
+.hero-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}
+.pill{border:2px solid var(--ink);border-radius:99px;padding:5px 10px;background:var(--white);font-size:11px}
+.hero-art{padding:16px 18px 12px 0;align-self:stretch;display:grid;place-items:center}
+.hero-art svg{width:100%;max-height:330px}
+.section{margin-top:34px;scroll-margin-top:85px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 2px 15px}
+.eyebrow{font-size:10px;letter-spacing:.18em;font-weight:900;color:#9b5b50}
+h2{font-size:23px;margin:4px 0 0;font-weight:900}
+.sub{font-size:12px;color:var(--muted)}
+.grid{display:grid;gap:14px}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--white);border:var(--line);border-radius:var(--radius);padding:17px;box-shadow:var(--shadow)}
+.card-title{font-weight:900;font-size:15px}
+.budget{background:#fff1e9}
+.budget-top{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.total{font-size:30px;font-weight:900;line-height:1.2;margin:8px 0}
+.total small{font-size:12px}
+.currency-switch{display:flex;gap:6px}
+.currency-switch button{border:2px solid var(--ink);border-radius:99px;padding:6px 11px;background:var(--white);font-size:12px}
+.currency-switch button.active{background:var(--yellow);box-shadow:2px 2px 0 var(--ink)}
+.rate{font-size:11px;color:var(--muted);margin-top:4px}
+.rate input{width:65px;border:2px solid var(--ink);border-radius:9px;padding:3px 5px;background:var(--white);font-weight:800}
+.form-row{display:grid;grid-template-columns:minmax(0,1fr) 100px 100px auto;gap:7px;margin-top:15px}
+.form-row input,.form-row select{min-width:0;width:100%;border:2px solid var(--ink);border-radius:13px;padding:10px;background:var(--white);font-size:13px}
+.btn{border:2px solid var(--ink);border-radius:14px;padding:9px 13px;background:var(--yellow);font-weight:900;box-shadow:3px 3px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.expenses{display:grid;gap:7px;margin-top:13px}
+.expense{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:2px dashed #d9c9bc;padding-top:8px;font-size:12px}
+.expense small{display:block;color:var(--muted);font-size:10px}
+.expense button{border:0;background:transparent;text-decoration:underline;font-size:11px}
+.flight{position:relative;overflow:hidden;background:#f4faff}
+.flight:nth-child(2){background:#fff6e1}
+.flight-head{display:flex;justify-content:space-between;align-items:center}
+.flight-label{font-size:11px;background:var(--green);border:2px solid var(--ink);border-radius:99px;padding:4px 9px}
+.route{display:flex;align-items:center;gap:10px;margin:18px 0 26px}
+.airport{font-size:26px;font-weight:900}
+.airport small{display:block;font-size:10px;color:var(--muted)}
+.route-line{height:3px;background:var(--ink);flex:1 1 40px;min-width:40px;position:relative;display:block}
+.route-plane{position:absolute;display:block;width:18px;height:18px;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);background:var(--paper);padding:1px;overflow:visible;pointer-events:none}
+
+
+.flight-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--muted)}
+.date-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 3px 13px;scrollbar-width:none}
+.date-tab{display:block;text-decoration:none;flex:0 0 auto;min-width:72px;background:var(--white);border:2px solid var(--ink);border-radius:18px;padding:8px 10px;text-align:center;box-shadow:2px 2px 0 var(--ink);transition:transform .28s}
+.date-tab strong{display:block;font-size:16px;font-weight:900}
+.date-tab span{font-size:10px;color:var(--muted)}
+.date-tab.active{background:var(--coral);transform:translateY(-4px) rotate(-1deg);box-shadow:4px 5px 0 var(--ink)}
+#itinerary:has(#static-day-2:target) .static-date-tab[href="#static-day-2"],#itinerary:has(#static-day-3:target) .static-date-tab[href="#static-day-3"],#itinerary:has(#static-day-4:target) .static-date-tab[href="#static-day-4"],#itinerary:has(#static-day-5:target) .static-date-tab[href="#static-day-5"],#itinerary:has(#static-day-6:target) .static-date-tab[href="#static-day-6"]{background:var(--coral);transform:translateY(-4px) rotate(-1deg);box-shadow:4px 5px 0 var(--ink)}
+.static-day{scroll-margin-top:100px;margin-bottom:18px}.static-date-tab{color:var(--ink)}.day-panel{animation:pop .42s cubic-bezier(.2,.9,.25,1.15) both}
+/* No-JavaScript fallback: anchor tabs still switch the visible day in iOS preview. */
+#dayPanel .static-day{display:none}
+#dayPanel .static-day:first-child{display:block}
+#dayPanel:has(.static-day:target) .static-day{display:none}
+#dayPanel .static-day:target{display:block}
+@keyframes pop{0%{opacity:0;transform:translateY(12px) scale(.96)}70%{opacity:1;transform:translateY(-3px) scale(1.01)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.day-banner{border:var(--line);border-radius:20px;background:var(--yellow);padding:13px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.day-banner strong{font-size:16px}.day-banner small{display:block;font-size:11px}
+.day-sticker{font-size:26px}
+.timeline-card{background:#fffefa;border:var(--line);border-radius:25px;padding:17px}
+.timeline{position:relative;padding-left:25px}
+.timeline:before{content:"";position:absolute;left:7px;top:9px;bottom:8px;width:3px;background:var(--ink);border-radius:9px}
+.event{position:relative;padding:0 0 19px 9px}
+.event:last-child{padding-bottom:2px}
+.event:before{content:"";position:absolute;left:-24px;top:4px;width:13px;height:13px;border:3px solid var(--ink);border-radius:50%;background:var(--coral)}
+.event time{font-size:11px;color:#9b5b50;font-weight:900}
+.event h3{font-size:15px;margin:1px 0 3px;font-weight:900}
+.event p{font-size:12px;color:var(--muted);margin:0}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tag{font-size:10px;border:2px solid var(--ink);border-radius:99px;padding:2px 8px;font-weight:900}
+.walk{background:var(--green)}.train{background:var(--blue)}.bus{background:var(--yellow)}.food{background:#f8c8bd}.note{background:#eee5d8}
+.todo-list{display:grid;gap:9px}
+.todo{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:2px solid var(--ink);border-radius:15px;background:var(--white);font-size:13px}
+.todo input{width:18px;height:18px;accent-color:#71965c;margin:2px 0 0}
+.todo.done span{text-decoration:line-through;color:#999}
+.progress{height:10px;border:2px solid var(--ink);border-radius:99px;overflow:hidden;margin:10px 0 14px;background:#fff}
+.progress>div{height:100%;width:0;background:var(--green);transition:width .25s}
+.stay{display:flex;gap:12px;align-items:flex-start}
+.stay-icon{width:43px;height:43px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:14px;background:var(--blue);font-size:22px;flex:0 0 auto}
+.stay h3{margin:0;font-size:15px;font-weight:900}.stay p{font-size:12px;color:var(--muted);margin:3px 0}
+.stay-price{font-size:15px;font-weight:900;margin-top:10px;color:#9b5b50}
+.footer{text-align:center;font-size:10px;letter-spacing:.1em;color:var(--muted);margin-top:42px}
+@media(max-width:700px){
+ .nav{display:block;padding:9px 12px}.navlinks{margin-top:5px}
+ main{padding:14px 12px 55px}
+ .hero{grid-template-columns:1fr;min-height:0}.hero-copy{padding:25px 20px 5px}.hero-art{padding:0 12px 8px}.hero-art svg{max-height:220px}
+ .two{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column;gap:3px}
+ .form-row{grid-template-columns:1fr 1fr}.form-row input:first-child{grid-column:1/-1}.form-row .btn{grid-column:1/-1}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ .day-panel{animation:none}
+}
+
+.maple-illustration{width:29px;height:29px;display:inline-block;vertical-align:middle;flex:0 0 auto}
+.brand{display:flex;align-items:center;gap:7px}
+.day-sticker{display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.day-sticker .maple-illustration{width:39px;height:39px;transform:rotate(8deg)}
+.footer-leaf{display:inline-flex;vertical-align:middle;margin-left:5px}
+.footer-leaf .maple-illustration{width:17px;height:17px}
+
+/* MOMIJI 26 interaction & illustration refinements */
+.static-day{display:none}.static-day:first-child{display:block}
+.date-tab{min-width:78px;cursor:pointer;appearance:none;color:var(--ink)}
+.date-tab:focus-visible{outline:4px solid #9b5b50;outline-offset:3px}
+.day-panel{transform-origin:50% 0}
+.day-weather{display:flex;align-items:center;gap:13px;background:#eef7fb;border:3px solid var(--ink);border-radius:21px;padding:12px 15px;margin:0 0 13px;box-shadow:3px 3px 0 var(--ink)}
+.weather-art{width:54px;height:48px;flex:0 0 auto;animation:weatherFloat 4.5s ease-in-out infinite}
+.weather-copy strong{display:block;font-size:14px}.weather-copy small{display:block;font-size:11px;color:var(--muted)}
+.heading-art{width:30px;height:30px;display:inline-block;vertical-align:-7px;margin-left:3px}
+.maple-illustration{animation:leafBob 5s ease-in-out infinite;transform-origin:50% 55%}
+.hero-art svg{animation:sceneFloat 6s ease-in-out infinite}
+@keyframes leafBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-4px) rotate(4deg)}}
+@keyframes sceneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes weatherFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.maple-illustration,.hero-art svg,.weather-art{animation:none!important}}
+
+
+/* Reliable no-script date tabs: one checked date reveals exactly one itinerary panel. */
+.day-choice{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+#dayPanel .static-day{display:none!important}
+#day-choice-1:checked ~ #dayPanel #static-day-1,
+#day-choice-2:checked ~ #dayPanel #static-day-2,
+#day-choice-3:checked ~ #dayPanel #static-day-3,
+#day-choice-4:checked ~ #dayPanel #static-day-4,
+#day-choice-5:checked ~ #dayPanel #static-day-5,
+#day-choice-6:checked ~ #dayPanel #static-day-6{display:block!important;animation:pop .42s cubic-bezier(.2,.9,.25,1.15) both}
+#day-choice-1:checked ~ #dateTabs label[for="day-choice-1"],
+#day-choice-2:checked ~ #dateTabs label[for="day-choice-2"],
+#day-choice-3:checked ~ #dateTabs label[for="day-choice-3"],
+#day-choice-4:checked ~ #dateTabs label[for="day-choice-4"],
+#day-choice-5:checked ~ #dateTabs label[for="day-choice-5"],
+#day-choice-6:checked ~ #dateTabs label[for="day-choice-6"]{background:var(--coral);transform:translateY(-4px) rotate(-1deg);box-shadow:4px 5px 0 var(--ink)}
+.date-tabs label{display:block;flex:0 0 auto}
+@media(prefers-reduced-motion:reduce){.day-panel,.static-day,.maple-illustration,.weather-art,.hero-art svg{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.section-illustration{width:36px;height:36px;vertical-align:middle;margin-left:5px;overflow:visible}
+.stay-illustration{width:58px;height:58px;display:block}
+.pin-illustration{width:17px;height:21px;vertical-align:-5px;margin-right:4px}
+.stay-icon{display:flex;align-items:center;justify-content:center;flex:0 0 72px;min-height:72px}
+
+/* Flight cards styled like illustrated boarding-pass itinerary cards */
+.flight-grid{gap:20px}
+.flight{padding:0!important;background:#fffefa!important;border:3px solid var(--ink)!important;border-radius:30px!important;overflow:hidden;box-shadow:5px 5px 0 var(--ink)}
+.flight-head{margin:0!important;padding:12px 18px;min-height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--ink)}
+.flight-out .flight-head{background:var(--blue)}
+.flight-return .flight-head{background:var(--green)}
+.flight-label{font-size:15px!important;font-weight:800;background:none!important;border:0!important;border-radius:0!important;padding:0!important}
+.flight-code{font-size:16px;letter-spacing:.04em}
+.flight-route{display:grid;grid-template-columns:minmax(76px,1fr) minmax(55px,1.25fr) minmax(76px,1fr);align-items:start;gap:8px;padding:20px 16px 14px}
+.flight-point{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.flight-point-end{align-items:flex-end;text-align:right}
+.flight-point strong{font-size:clamp(25px,5vw,36px);line-height:1.2;font-weight:800;letter-spacing:-.035em;white-space:nowrap}
+.flight-point span{font-size:18px;font-weight:900;line-height:1.4;margin-top:7px}
+.flight-point small{font-size:11px;color:var(--muted);white-space:nowrap}
+.flight-track{height:28px;position:relative;margin-top:11px;border-top:4px dotted var(--ink);min-width:0}
+.flight-plane{position:absolute;left:50%;top:-14px;transform:translateX(-50%);width:27px;height:25px;background:#fffefa;display:flex;align-items:center;justify-content:center}
+.flight-plane svg{display:block;width:24px;height:24px}
+.flight-foot{padding:4px 18px 18px;font-size:12px;color:var(--muted)}
+@media(max-width:390px){.flight-route{grid-template-columns:minmax(68px,1fr) minmax(40px,.9fr) minmax(68px,1fr);gap:5px;padding-left:12px;padding-right:12px}.flight-point strong{font-size:25px}.flight-point small{font-size:10px}.flight-label{font-size:13px!important}}
+.lodging-heading-art{width:39px;height:39px;vertical-align:-7px;margin-left:7px}
+.stay-icon{width:72px;height:72px;min-height:72px;flex:0 0 72px;border:2px solid var(--ink);border-radius:18px;background:var(--blue);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stay-icon .stay-illustration{width:68px;height:68px;display:block}
+
+.budget-backup{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.backup-btn{font-size:12px!important;padding:8px 12px!important;min-height:38px}
+.import-label{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+
+.music-card{background:#fffefa}
+.music-heading{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.music-heading strong{display:block;font-size:17px;font-weight:900}
+.music-heading small{display:block;color:var(--muted);font-size:11px}
+.music-disc{width:46px;height:46px;border:3px solid var(--ink);border-radius:50%;background:var(--coral);display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);flex:0 0 auto}
+.music-disc span{font-size:27px;line-height:1;color:var(--ink)}
+.music-player{width:100%;overflow:hidden;border:2px solid var(--ink);border-radius:16px;background:var(--paper);min-height:190px}
+.music-player iframe{display:block;width:100%;height:190px;border:0;background:#fffefa}
+.music-note{font-size:11px;color:var(--muted);margin:10px 0 5px}
+.music-link{display:inline-block;font-size:12px;font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.music-play-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;margin:14px 0 10px;padding:16px 18px;border:3px solid var(--ink);border-radius:999px;background:var(--coral);color:var(--ink);font-size:16px;font-weight:900;text-decoration:none;box-shadow:4px 4px 0 var(--ink)}
+.music-play-button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.music-play-button .play-icon{font-size:20px;line-height:1}
+
+</style>
+</head>
+<body>
+<header class="topbar"><nav class="nav">
+ <div class="brand"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg> PROJECT MOMIJI 26</div>
+ <div class="navlinks"><a href="#flights">航班</a><a href="#music">音樂</a><a href="#itinerary">每日行程</a><a href="#budget">記帳</a><a href="#checklist">待辦</a><a href="#stay">住宿</a></div>
+</nav></header>
+<main>
+<section class="hero" id="home">
+ <div class="hero-copy">
+  <div class="kicker">AUTUMN EXPEDITION · JAPAN 2026</div>
+  <h1>PROJECT<br>MOMIJI 26<span>名古屋・楓紅作戰計畫</span></h1>
+  <p>三人出動，目標：追捕整座日本的秋天。沿著紅葉山徑、古城與小小電車，收藏秋日風景。</p>
+  <div class="hero-meta"><span class="pill">NAGOYA, JAPAN</span><span class="pill">2026.11.29 — 12.04</span><span class="pill">3 AGENTS</span></div>
+ </div>
+ <div class="hero-art" aria-label="名古屋城、楓樹與電車插畫">
+ <svg viewBox="0 0 500 330" role="img">
+  <!-- sun -->
+  <circle cx="390" cy="58" r="34" fill="#F6D27A" stroke="#3E3A39" stroke-width="4"/>
+  <!-- clouds -->
+  <path d="M35 75 Q40 52 64 61 Q75 34 100 51 Q125 46 130 72Z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="4" stroke-linejoin="round"/>
+  <!-- far hills -->
+  <path d="M0 238 Q85 160 166 220 Q255 143 342 218 Q425 165 500 220 V330 H0Z" fill="#B9DAA5" stroke="#3E3A39" stroke-width="4"/>
+  <!-- castle -->
+  <g stroke="#3E3A39" stroke-width="4" stroke-linejoin="round">
+   <path d="M158 213 H340 V278 H158Z" fill="#FFFCF6"/>
+   <path d="M179 178 H320 L306 214 H193Z" fill="#F2A497"/>
+   <path d="M194 145 H305 L290 180 H209Z" fill="#FFFCF6"/>
+   <path d="M214 111 H286 L274 147 H226Z" fill="#F2A497"/>
+   <path d="M229 92 H271 L250 72Z" fill="#F6D27A"/>
+   <path d="M180 178 L250 153 L320 178" fill="none"/>
+   <path d="M204 213 V278 M250 213 V278 M296 213 V278" fill="none"/>
+   <path d="M223 244 Q250 210 277 244 V278 H223Z" fill="#A8D3E6"/>
+   <path d="M216 111 Q250 91 284 111" fill="none"/>
+  </g>
+  <!-- maple tree -->
+  <g stroke="#3E3A39" stroke-width="4" stroke-linejoin="round">
+   <path d="M80 278 Q99 230 94 184 M94 218 L60 184 M93 205 L126 171" fill="none" stroke-width="9"/>
+   <path d="M91 183 L75 169 L79 151 L59 145 L77 132 L75 111 L96 122 L110 104 L116 129 L139 134 L123 151 L131 169 L108 166Z" fill="#F2A497"/>
+   <path d="M57 202 L42 190 L25 197 L28 177 L12 164 L33 159 L39 140 L53 155 L72 151 L66 172 L78 184Z" fill="#F6D27A"/>
+  </g>
+  <!-- train -->
+  <g stroke="#3E3A39" stroke-width="4" stroke-linejoin="round">
+   <path d="M300 263 Q300 246 318 246 H447 Q465 246 465 263 V300 H300Z" fill="#A8D3E6"/>
+   <path d="M317 257 H355 V280 H317Z M366 257 H405 V280 H366Z M416 257 H449 V280 H416Z" fill="#FFFCF6"/>
+   <path d="M310 290 H455" fill="none"/>
+   <circle cx="331" cy="302" r="9" fill="#3E3A39"/><circle cx="435" cy="302" r="9" fill="#3E3A39"/>
+  </g>
+  <g fill="#3E3A39"><circle cx="20" cy="285" r="4"/><circle cx="140" cy="292" r="4"/><circle cx="480" cy="180" r="4"/></g>
+ </svg>
+ </div>
+</section>
+
+<section class="section" id="budget">
+ <div class="section-head"><div><div class="eyebrow">MISSION FINANCE</div><h2>旅行記帳區 <svg class="heading-art" viewBox="0 0 40 40" role="img" aria-label="錢幣插畫"><circle cx="20" cy="20" r="15" fill="#F6D27A" stroke="#3E3A39" stroke-width="3"/><path d="M24 12q-2-3-6-1-5 2-1 6l5 3q5 3 0 7-4 3-8-1M20 8v24" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/></svg></h2></div><div class="sub">可選日圓或台幣，統一換算統計</div></div>
+ <div class="card budget">
+  <div class="budget-top">
+   <div><div class="sub">目前總支出（以台幣換算）</div><div class="total" id="total">NT$ 0</div><div class="rate">匯率可自行調整：1 JPY = <input id="rate" type="number" min="0.001" step="0.001" value="0.22" aria-label="日圓兌台幣匯率"> TWD</div></div>
+   <div class="currency-switch"><button type="button" class="active" data-currency="JPY">¥ 日圓</button><button type="button" data-currency="TWD">NT$ 台幣</button></div>
+  </div>
+  <div class="rate" id="share">每人平均 NT$ 0（3 人分攤）</div>
+  <div class="rate" id="saveStatus" aria-live="polite">☁️ 記帳會自動保存在這台裝置的瀏覽器</div>
+  <form class="form-row" id="expenseForm">
+   <input id="expenseName" placeholder="支出項目，例如：午餐" aria-label="支出項目" required>
+   <input id="expenseAmount" type="number" min="1" step="1" placeholder="金額" aria-label="支出金額" required>
+   <select id="expenseCurrency" aria-label="支出幣別"><option value="JPY">日圓 JPY</option><option value="TWD">台幣 TWD</option></select>
+   <button class="btn" type="submit">＋ 記一筆</button>
+  </form>
+  <div class="budget-backup">
+   <button class="btn backup-btn" type="button" id="exportBudget">匯出記帳備份</button>
+   <label class="btn backup-btn import-label" for="importBudget">匯入記帳備份</label>
+   <input id="importBudget" type="file" accept="application/json,.json" hidden>
+  </div>
+  <div class="expenses" id="expenses"><div class="expense"><span>還沒有支出紀錄</span><span>🍡</span></div></div>
+ </div>
+</section>
+
+<section class="section" id="flights">
+ <div class="section-head"><div><div class="eyebrow">FLIGHT BRIEFING</div><h2>航班資訊 <svg class="heading-art" viewBox="0 0 40 40" role="img" aria-label="飛機插畫"><path d="M4 21l13 2 8 12 4-1-4-12 9 1q4 0 3-3l-13-5-5-11-4 1 2 11-11 2z" fill="#A8D3E6" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/></svg></h2></div><div class="sub">國泰航空｜已提供航班資料</div></div>
+ <div class="grid two flight-grid">
+  <article class="card flight flight-out">
+   <div class="flight-head"><span class="flight-label">11/29（日）去程</span><strong class="flight-code">CX530</strong></div>
+   <div class="flight-route">
+    <div class="flight-point"><strong>12:00</strong><span>TPE</span><small>桃園 T1</small></div>
+    <div class="flight-track"><span class="flight-plane" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M4 21l13 2 8 12 4-1-4-12 9 1q4 0 3-3l-13-5-5-11-4 1 2 11-11 2z" fill="#A8D3E6" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/></svg></span></div>
+    <div class="flight-point flight-point-end"><strong>15:35</strong><span>NGO</span><small>中部國際 T1</small></div>
+   </div>
+   <div class="flight-foot">國泰航空｜抵達時間為日本當地時間</div>
+  </article>
+  <article class="card flight flight-return">
+   <div class="flight-head"><span class="flight-label">12/04（五）回程</span><strong class="flight-code">CX531</strong></div>
+   <div class="flight-route">
+    <div class="flight-point"><strong>16:40</strong><span>NGO</span><small>中部國際 T1</small></div>
+    <div class="flight-track"><span class="flight-plane" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M4 21l13 2 8 12 4-1-4-12 9 1q4 0 3-3l-13-5-5-11-4 1 2 11-11 2z" fill="#A8D3E6" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/></svg></span></div>
+    <div class="flight-point flight-point-end"><strong>19:10</strong><span>TPE</span><small>桃園 T1</small></div>
+   </div>
+   <div class="flight-foot">國泰航空｜抵達時間為台灣當地時間</div>
+  </article>
+ </div>
+</section>
+
+
+<section class="section" id="music">
+ <div class="section-head">
+  <div>
+   <div class="eyebrow">AUTUMN SOUNDTRACK</div>
+   <h2>旅途背景音樂 <svg class="heading-art" viewBox="0 0 40 40" role="img" aria-label="音符插畫"><path d="M24 7v22a6 6 0 1 1-3-5V12l14-3v16a6 6 0 1 1-3-5V6z" fill="#F2A497" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/></svg></h2>
+  </div>
+  <div class="sub">PROJECT MOMIJI 26 專屬配樂</div>
+ </div>
+ <div class="card music-card">
+  <div class="music-heading">
+   <div class="music-disc" aria-hidden="true"><span>♪</span></div>
+   <div><strong>京都の紅葉</strong><small>Verna · Japanese Autumn Instrumental</small></div>
+  </div>
+  <div class="music-player" title="Suno 音樂播放器">
+   <iframe src="https://suno.com/embed/b166b53e-8ea4-48ea-b54c-56c420fab15b" title="播放京都の紅葉" loading="lazy" allow="autoplay; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  <a class="music-play-button" href="https://suno.com/s/5IIvE7jBMdReLA5j" target="_blank" rel="noopener">
+   <span class="play-icon" aria-hidden="true">▶</span><span>播放器沒顯示？點我開啟音樂</span>
+  </a>
+  <p class="music-note">可直接在網頁播放器按下播放；若 iPhone 的檔案預覽未載入播放器，請用 Safari 開啟，或點下方按鈕前往 Suno。手機通常需要手動點擊播放。</p>
+  <a class="music-link" href="https://suno.com/s/5IIvE7jBMdReLA5j" target="_blank" rel="noopener">在 Suno 查看原曲 ↗</a>
+ </div>
+</section>
+<section class="section" id="itinerary">
+ <div class="section-head"><div><div class="eyebrow">DAILY OPERATION</div><h2>每日行程 <svg class="heading-art" viewBox="0 0 40 40" role="img" aria-label="月曆插畫"><rect x="5" y="8" width="30" height="27" rx="5" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8"/><path d="M5 16h30M13 4v8M27 4v8" stroke="#3E3A39" stroke-width="2.8" stroke-linecap="round"/><path d="M13 23h4m6 0h4M13 29h4" stroke="#F2A497" stroke-width="3" stroke-linecap="round"/></svg></h2></div><div class="sub">點選日期查看當天行程與天氣；預報將於出發前更新</div></div>
+ <input class="day-choice" type="radio" name="momiji-day" id="day-choice-1" checked>
+ <input class="day-choice" type="radio" name="momiji-day" id="day-choice-2">
+ <input class="day-choice" type="radio" name="momiji-day" id="day-choice-3">
+ <input class="day-choice" type="radio" name="momiji-day" id="day-choice-4">
+ <input class="day-choice" type="radio" name="momiji-day" id="day-choice-5">
+ <input class="day-choice" type="radio" name="momiji-day" id="day-choice-6">
+ <div class="date-tabs" id="dateTabs" role="tablist" aria-label="選擇日期">
+  <label class="date-tab" role="tab" for="day-choice-1"><strong>11/29</strong><span>週日 · DAY 01</span></label>
+  <label class="date-tab" role="tab" for="day-choice-2"><strong>11/30</strong><span>週一 · DAY 02</span></label>
+  <label class="date-tab" role="tab" for="day-choice-3"><strong>12/01</strong><span>週二 · DAY 03</span></label>
+  <label class="date-tab" role="tab" for="day-choice-4"><strong>12/02</strong><span>週三 · DAY 04</span></label>
+  <label class="date-tab" role="tab" for="day-choice-5"><strong>12/03</strong><span>週四 · DAY 05</span></label>
+  <label class="date-tab" role="tab" for="day-choice-6"><strong>12/04</strong><span>週五 · DAY 06</span></label>
+ </div><div class="day-panel" id="dayPanel" role="tabpanel" aria-live="polite"><section class="static-day" id="static-day-1"><div class="day-weather"><svg class="weather-art" viewBox="0 0 64 54" role="img" aria-label="雲朵與太陽插畫"><circle cx="43" cy="15" r="10" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M10 39h39a9 9 0 0 0 0-18 13 13 0 0 0-25-2 10 10 0 0 0-14 10 8 8 0 0 0 0 10z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8" stroke-linejoin="round"/><path d="M21 45l-3 5m17-5l-3 5" stroke="#A8D3E6" stroke-width="3" stroke-linecap="round"/></svg><div class="weather-copy"><strong>每日天氣｜名古屋</strong><small>目前尚無可靠的 11 月底逐日預報。出發前 7 天再查看實際氣溫、降雨與風勢；目前先以約 7°C 的保暖情境準備。</small></div></div><div class="day-banner"><div><strong>抵達名古屋・榮商圈</strong><small>2026 年 11/29（日）｜抵達中部國際機場，搭名鐵進市區，展開名古屋第一晚。</small></div><span class="day-sticker"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></div><div class="timeline-card"><div class="timeline"><article class="event"><time>12:00–15:35</time><h3>桃園 T1 — 中部國際 T1</h3><p>國泰航空 CX530。15:35 抵達中部國際機場。</p><div class="tags"><span class="tag note">CX530 航班</span></div></article><article class="event"><time>抵達後</time><h3>購買交通卡</h3><p>媽媽要買交通卡。</p><div class="tags"><span class="tag note">機場採買</span></div></article><article class="event"><time>下午</time><h3>名鐵前往名古屋站</h3><p>搭名鐵進市區；指定席會有兩張票。車票 ¥980（小票）＋指定席 ¥450，前往飯店。</p><div class="tags"><span class="tag train">名鐵</span></div></article><article class="event"><time>入住</time><h3>ACCESS by LOISIR HOTEL Nagoya</h3><p>アクセス・バイ・ロワジールホテル 名古屋；辦理入住或寄放行李。</p><div class="tags"><span class="tag note">住宿</span></div></article><article class="event"><time>晚餐</time><h3>鳥開總本家 LACHIC 店</h3><p>LACHIC 7F 晚餐。</p><div class="tags"><span class="tag food">美食</span></div></article><article class="event"><time>飯後</time><h3>綠洲 21・名古屋電視塔周邊</h3><p>散步欣賞榮商圈夜景。</p><div class="tags"><span class="tag walk">步行</span><span class="tag note">夜景</span></div></article><article class="event"><time>逛街</time><h3>Alpen Nagoya・吉伊卡哇鯛魚燒</h3><p>Alpen Nagoya 看運動／滑雪用品；吉伊卡哇鯛魚燒位於名古屋 PARCO 西館 B1F。</p><div class="tags"><span class="tag note">購物</span><span class="tag walk">步行</span></div></article></div></div></section><section class="static-day" id="static-day-2"><div class="day-weather"><svg class="weather-art" viewBox="0 0 64 54" role="img" aria-label="雲朵與太陽插畫"><circle cx="43" cy="15" r="10" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M10 39h39a9 9 0 0 0 0-18 13 13 0 0 0-25-2 10 10 0 0 0-14 10 8 8 0 0 0 0 10z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8" stroke-linejoin="round"/><path d="M21 45l-3 5m17-5l-3 5" stroke="#A8D3E6" stroke-width="3" stroke-linecap="round"/></svg><div class="weather-copy"><strong>每日天氣｜名古屋</strong><small>目前尚無可靠的 11 月底逐日預報。出發前 7 天再查看實際氣溫、降雨與風勢；目前先以約 7°C 的保暖情境準備。</small></div></div><div class="day-banner"><div><strong>香嵐溪賞楓一日遊 🌟</strong><small>2026 年 11/30（一）｜全程最優先的賞楓日；參加 Klook 一日行程，交通與回程保留彈性。</small></div><span class="day-sticker"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></div><div class="timeline-card"><div class="timeline"><article class="event"><time>07:30</time><h3>名古屋出發</h3><p>搭地鐵、轉巴士前往香嵐溪；依 Klook 集合資訊出發。</p><div class="tags"><span class="tag train">地鐵</span><span class="tag bus">巴士</span></div></article><article class="event"><time>上午</time><h3>香嵐溪・待月橋・巴川沿岸</h3><p>沿溪散步，欣賞楓紅與河岸景色。</p><div class="tags"><span class="tag walk">步行</span><span class="tag note">賞楓</span></div></article><article class="event"><time>中午</time><h3>香積寺・足助老街</h3><p>參訪香積寺，逛足助老街、安排午餐與小吃。</p><div class="tags"><span class="tag walk">步行</span><span class="tag food">美食</span></div></article><article class="event"><time>傍晚</time><h3>香嵐溪夜間點燈（視體力）</h3><p>若體力與行程時間允許，再欣賞夜間點燈後返回名古屋。</p><div class="tags"><span class="tag note">夜楓</span><span class="tag bus">巴士</span></div></article><article class="event"><time>晚餐／備案</time><h3>Narutoya 拉麵</h3><p>若回程太晚則取消；只收現金。</p><div class="tags"><span class="tag food">拉麵</span><span class="tag note">現金</span></div></article></div></div></section><section class="static-day" id="static-day-3"><div class="day-weather"><svg class="weather-art" viewBox="0 0 64 54" role="img" aria-label="雲朵與太陽插畫"><circle cx="43" cy="15" r="10" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M10 39h39a9 9 0 0 0 0-18 13 13 0 0 0-25-2 10 10 0 0 0-14 10 8 8 0 0 0 0 10z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8" stroke-linejoin="round"/><path d="M21 45l-3 5m17-5l-3 5" stroke="#A8D3E6" stroke-width="3" stroke-linecap="round"/></svg><div class="weather-copy"><strong>每日天氣｜名古屋</strong><small>目前尚無可靠的 11 月底逐日預報。出發前 7 天再查看實際氣溫、降雨與風勢；目前先以約 7°C 的保暖情境準備。</small></div></div><div class="day-banner"><div><strong>犬山城・城下町・寂光院</strong><small>2026 年 12/01（二）｜國寶古城、城下町小吃與山寺楓紅。</small></div><span class="day-sticker"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></div><div class="timeline-card"><div class="timeline"><article class="event"><time>早餐</time><h3>Coffee House Kako</h3><p>先吃早餐，再前往名鐵名古屋站。</p><div class="tags"><span class="tag food">咖啡</span></div></article><article class="event"><time>出發前</time><h3>購買犬山城下町套票</h3><p>在名鐵服務中心購買，參考價格 ¥1,630。</p><div class="tags"><span class="tag note">套票</span></div></article><article class="event"><time>08:30</time><h3>名鐵名古屋站出發</h3><p>搭名鐵前往犬山。</p><div class="tags"><span class="tag train">名鐵</span></div></article><article class="event"><time>上午</time><h3>三光稻荷神社・犬山城</h3><p>三光稻荷神社可洗錢；犬山城建於 1537 年，現存最古老木造天守之一，為國寶五城之一。</p><div class="tags"><span class="tag walk">步行</span><span class="tag note">神社</span></div></article><article class="event"><time>點心</time><h3>牛太郎</h3><p>犬山小吃推薦：牛太郎，2 貫約 ¥700；可留意套票合作店家的折抵優惠。</p><div class="tags"><span class="tag food">小吃</span></div></article><article class="event"><time>中午</time><h3>犬山城下町</h3><p>在城下町用餐、逛老街，依喜好使用套票優惠。</p><div class="tags"><span class="tag walk">步行</span><span class="tag food">美食</span></div></article><article class="event"><time>下午</time><h3>寂光院賞楓</h3><p>搭接駁車前往寂光院；寺內需爬山，也可考慮搭纜車（約 ¥200）。</p><div class="tags"><span class="tag bus">接駁車</span><span class="tag walk">步行</span><span class="tag note">賞楓</span></div></article><article class="event"><time>傍晚</time><h3>返回榮商圈</h3><p>回名古屋市區，前往 LACHIC。</p><div class="tags"><span class="tag train">名鐵</span></div></article><article class="event"><time>晚餐</time><h3>Shabushabu Yamawarau</h3><p>LACHIC 8F 壽喜燒，建議事先預約，避免久候。另列黑豚屋炸豬排為備選。</p><div class="tags"><span class="tag food">壽喜燒</span><span class="tag note">預約建議</span></div></article></div></div></section><section class="static-day" id="static-day-4"><div class="day-weather"><svg class="weather-art" viewBox="0 0 64 54" role="img" aria-label="雲朵與太陽插畫"><circle cx="43" cy="15" r="10" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M10 39h39a9 9 0 0 0 0-18 13 13 0 0 0-25-2 10 10 0 0 0-14 10 8 8 0 0 0 0 10z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8" stroke-linejoin="round"/><path d="M21 45l-3 5m17-5l-3 5" stroke="#A8D3E6" stroke-width="3" stroke-linecap="round"/></svg><div class="weather-copy"><strong>每日天氣｜名古屋</strong><small>目前尚無可靠的 11 月底逐日預報。出發前 7 天再查看實際氣溫、降雨與風勢；目前先以約 7°C 的保暖情境準備。</small></div></div><div class="day-banner"><div><strong>德川園・大須商店街</strong><small>2026 年 12/02（三）｜庭園賞楓、神社巡禮與大須美食散策。</small></div><span class="day-sticker"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></div><div class="timeline-card"><div class="timeline"><article class="event"><time>08:30</time><h3>Ito Coffee 早餐</h3><p>喝咖啡、吃小倉紅豆奶油；之後搭公車前往德川園。</p><div class="tags"><span class="tag food">咖啡</span><span class="tag bus">公車</span></div></article><article class="event"><time>上午</time><h3>德川園賞楓</h3><p>德川家康孫子的後花園；可留意德川園＋名古屋城／白鳥庭園套票。</p><div class="tags"><span class="tag bus">公車</span><span class="tag note">賞楓</span></div></article><article class="event"><time>中午</time><h3>德川美術館周邊用餐</h3><p>在德川園、美術館周邊安排午餐。</p><div class="tags"><span class="tag food">美食</span></div></article><article class="event"><time>下午</time><h3>大須觀音・大須商店街</h3><p>逛大須商店街與周邊店家。</p><div class="tags"><span class="tag train">地鐵</span><span class="tag walk">步行</span></div></article><article class="event"><time>下午點心</time><h3>鈴木商店</h3><p>吃炒麵，可加蛋、加菜；用餐後自行回收餐具。</p><div class="tags"><span class="tag food">小吃</span></div></article><article class="event"><time>下午</time><h3>三輪神社</h3><p>兔子主題神社，參拜時間參考 09:00–17:00。</p><div class="tags"><span class="tag note">神社</span><span class="tag walk">步行</span></div></article><article class="event"><time>晚餐</time><h3>富士山 55</h3><p>晚餐備選：台灣拉麵。</p><div class="tags"><span class="tag food">拉麵</span></div></article><article class="event"><time>宵夜</time><h3>手羽先むすめ 大須店</h3><p>品嚐名古屋特色雞翅。</p><div class="tags"><span class="tag food">宵夜</span></div></article></div></div></section><section class="static-day" id="static-day-5"><div class="day-weather"><svg class="weather-art" viewBox="0 0 64 54" role="img" aria-label="雲朵與太陽插畫"><circle cx="43" cy="15" r="10" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M10 39h39a9 9 0 0 0 0-18 13 13 0 0 0-25-2 10 10 0 0 0-14 10 8 8 0 0 0 0 10z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8" stroke-linejoin="round"/><path d="M21 45l-3 5m17-5l-3 5" stroke="#A8D3E6" stroke-width="3" stroke-linecap="round"/></svg><div class="weather-copy"><strong>每日天氣｜名古屋</strong><small>目前尚無可靠的 11 月底逐日預報。出發前 7 天再查看實際氣溫、降雨與風勢；目前先以約 7°C 的保暖情境準備。</small></div></div><div class="day-banner"><div><strong>熱田神宮・白鳥庭園・名古屋城</strong><small>2026 年 12/03（四）｜神宮森林參道、池泉庭園與名古屋城巡禮。</small></div><span class="day-sticker"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></div><div class="timeline-card"><div class="timeline"><article class="event"><time>09:00–10:30</time><h3>熱田神宮</h3><p>參拜、漫步森林參道。</p><div class="tags"><span class="tag train">地鐵</span><span class="tag walk">步行</span></div></article><article class="event"><time>10:30–11:00</time><h3>前往白鳥庭園</h3><p>由熱田神宮一帶移動至白鳥庭園。</p><div class="tags"><span class="tag walk">步行／交通</span></div></article><article class="event"><time>11:00–12:30</time><h3>白鳥庭園賞楓</h3><p>欣賞池泉庭園與秋日景色。</p><div class="tags"><span class="tag note">庭園</span><span class="tag note">賞楓</span></div></article><article class="event"><time>12:30–14:00</time><h3>熱田蓬萊軒午餐</h3><p>品嚐名古屋鰻魚飯；神宮附近分店參考營業時間 11:30–14:30。</p><div class="tags"><span class="tag food">鰻魚飯</span></div></article><article class="event"><time>15:00</time><h3>名古屋城</h3><p>參觀名古屋城；你提供的參考開放時間為 09:00–16:30，請留意入場截止時間。</p><div class="tags"><span class="tag train">地鐵／巴士</span><span class="tag note">古城</span></div></article></div></div></section><section class="static-day" id="static-day-6"><div class="day-weather"><svg class="weather-art" viewBox="0 0 64 54" role="img" aria-label="雲朵與太陽插畫"><circle cx="43" cy="15" r="10" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M10 39h39a9 9 0 0 0 0-18 13 13 0 0 0-25-2 10 10 0 0 0-14 10 8 8 0 0 0 0 10z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.8" stroke-linejoin="round"/><path d="M21 45l-3 5m17-5l-3 5" stroke="#A8D3E6" stroke-width="3" stroke-linecap="round"/></svg><div class="weather-copy"><strong>每日天氣｜名古屋</strong><small>目前尚無可靠的 11 月底逐日預報。出發前 7 天再查看實際氣溫、降雨與風勢；目前先以約 7°C 的保暖情境準備。</small></div></div><div class="day-banner"><div><strong>退房・最後採買・返台</strong><small>2026 年 12/04（五）｜早上退房寄放行李，中午前往機場，搭乘 CX531 返回台灣。</small></div><span class="day-sticker"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></div><div class="timeline-card"><div class="timeline"><article class="event"><time>10:00</time><h3>退房・寄放行李</h3><p>從 ACCESS by LOISIR HOTEL Nagoya 退房，行李寄放飯店。</p><div class="tags"><span class="tag note">住宿</span></div></article><article class="event"><time>上午</time><h3>HARBS 千層蛋糕</h3><p>安排吃 HARBS 千層蛋糕。</p><div class="tags"><span class="tag food">甜點</span></div></article><article class="event"><time>上午</time><h3>兔子神社・招財貓景點（備選）</h3><p>視時間安排兔子神社；若時間充裕，再去看招財貓。</p><div class="tags"><span class="tag walk">散步</span><span class="tag note">備選景點</span></div></article><article class="event"><time>午餐</time><h3>Arancia 或榮商圈簡餐</h3><p>依當天時間與胃口選擇。</p><div class="tags"><span class="tag food">午餐</span></div></article><article class="event"><time>12:00</time><h3>前往中部國際機場</h3><p>搭名鐵前往機場；不要走北閘口（沒有電梯），留意無障礙動線與行李。</p><div class="tags"><span class="tag train">名鐵</span><span class="tag note">交通提醒</span></div></article><article class="event"><time>16:40–19:10</time><h3>中部國際 T1 — 桃園 T1</h3><p>國泰航空 CX531，16:40 起飛、19:10 抵達。預留報到、退稅與安檢時間。</p><div class="tags"><span class="tag note">CX531 航班</span></div></article></div></div></section></div>
+</section>
+
+<section class="section" id="checklist">
+ <div class="section-head"><div><div class="eyebrow">PRE-DEPARTURE CHECK</div><h2>出發待辦清單 <svg class="section-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪旅行背包插畫">
+ <path d="M21 16a11 11 0 0 1 22 0" fill="none" stroke="#3E3A39" stroke-width="3.2" stroke-linecap="round"/>
+ <path d="M16 22q0-5 6-5h20q6 0 6 5l4 31q0 5-6 5H18q-6 0-6-5z" fill="#A8D3E6" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M19 35q13-8 26 0v13q-13 8-26 0z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3"/>
+ <path d="M26 22v-4m12 4v-4M25 42h14" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/>
+ <path d="M8 28q-3 12 2 21m46-21q3 12-2 21" fill="none" stroke="#F2A497" stroke-width="3.2" stroke-linecap="round"/>
+</svg></h2></div><div class="sub" id="todoCount">0 / 0 完成</div></div>
+ <div class="card"><div class="progress"><div id="progressBar"></div></div><div class="todo-list" id="todoList">
+  <label class="todo"><input type="checkbox"><span>預訂高鐵票</span></label>
+  <label class="todo"><input type="checkbox"><span>線上填寫 Visit Japan Web（VJW）</span></label>
+  <label class="todo"><input type="checkbox"><span>Klook 預訂香嵐溪行程</span></label>
+  <label class="todo"><input type="checkbox"><span>購買 eSIM</span></label>
+  <label class="todo"><input type="checkbox"><span>換日幣</span></label>
+  <label class="todo"><input type="checkbox"><span>預約餐廳</span></label>
+  <label class="todo"><input type="checkbox"><span>準備保暖衣物（平均氣溫約 7°C）及好走的鞋子</span></label>
+  <label class="todo"><input type="checkbox"><span>準備雨傘</span></label>
+  <label class="todo"><input type="checkbox"><span>回程前完成 VJW 海關申報資料</span></label>
+  <label class="todo"><input type="checkbox"><span>機場辦理退稅後，再托運行李</span></label>
+ </div></div>
+</section>
+
+<section class="section" id="stay">
+ <div class="section-head"><div><div class="eyebrow">BASE CAMP</div><h2>住宿資訊 <svg class="section-illustration lodging-heading-art" viewBox="0 0 48 48" role="img" aria-label="手繪紅磚小屋插畫">
+ <path d="M5 22L24 6l19 16" fill="#F2A497" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+ <path d="M10 20v22h28V20L24 9z" fill="#D98772" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/>
+ <path d="M15 25h7m-7 5h7m9-5h5m-5 5h5" stroke="#F6D27A" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M21 42V31q0-5 5-5t5 5v11" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/>
+ <path d="M6 43h36" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/>
+</svg></h2></div><div class="sub">本趟旅程住宿</div></div>
+ <div class="card">
+  <div class="stay">
+   <div class="stay-icon"><svg class="stay-illustration" viewBox="0 0 100 100" role="img" aria-label="紅磚小屋與腳踏車手繪插畫">
+ <path d="M15 40L48 13l34 27" fill="#F2A497" stroke="#3E3A39" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+ <path d="M22 36v48h54V36L49 16z" fill="#C96F5F" stroke="#3E3A39" stroke-width="4" stroke-linejoin="round"/>
+ <path d="M29 48h12m-12 8h12m24-8h7m-7 8h7M48 37h12" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+ <path d="M43 84V65q0-9 9-9t9 9v19" fill="#F6D27A" stroke="#3E3A39" stroke-width="3"/>
+ <path d="M10 86h80" stroke="#3E3A39" stroke-width="3.5" stroke-linecap="round"/>
+ <g fill="none" stroke="#3E3A39" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="20" cy="77" r="10" fill="#FFFCF6"/>
+  <circle cx="57" cy="77" r="10" fill="#FFFCF6"/>
+  <path d="M20 77l12-17 13 17H20l8-17h11m-7 0h9m-1 0l6 17m-2-17h7"/>
+  <path d="M27 57h8m-3-4l-5 4m23-4h8"/>
+ </g>
+ <path d="M31 60l-3-5m27-2l4-5" stroke="#3E3A39" stroke-width="2.8" stroke-linecap="round"/>
+ <circle cx="32" cy="60" r="2.5" fill="#F2A497" stroke="#3E3A39" stroke-width="1.5"/>
+</svg></div>
+   <div>
+    <h3>ACCESS by LOISIR HOTEL Nagoya</h3>
+    <p>名古屋市區｜本趟旅行住宿基地</p>
+    <p>入住：11/29（日）｜退房：12/04（五）</p>
+   </div>
+  </div>
+  <a class="btn" style="display:inline-block;text-decoration:none;margin-top:10px" href="https://www.google.com/maps/search/?api=1&amp;query=ACCESS+by+LOISIR+HOTEL+Nagoya" target="_blank" rel="noopener"><svg class="pin-illustration" viewBox="0 0 32 40" role="img" aria-label="手繪地圖定位圖示">
+ <path d="M16 37S3 22 3 15a13 13 0 1 1 26 0c0 7-13 22-13 22z" fill="#F2A497" stroke="#3E3A39" stroke-width="2.7"/>
+ <circle cx="16" cy="15" r="5" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.4"/>
+</svg> 在 Google Maps 開啟飯店位置 ↗</a>
+ </div>
+</section>
+<footer class="footer">PROJECT MOMIJI 26 · NAGOYA AUTUMN PICTURE BOOK · 3 AGENTS, 1 MISSION <span class="footer-leaf"><svg class="maple-illustration" viewBox="0 0 64 64" role="img" aria-label="手繪楓葉插畫">
+ <path d="M31 57 L27 43 L14 49 L17 37 L5 32 L18 25 L14 12 L27 17 L32 4 L38 17 L51 12 L47 26 L60 32 L47 38 L51 50 L38 44 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="3.2" stroke-linejoin="round"/>
+ <path d="M32 55 L32 31 M32 39 L20 29 M32 43 L44 31" fill="none" stroke="#3E3A39" stroke-width="2.4" stroke-linecap="round"/>
+ <path d="M25 19 Q31 13 37 19" fill="none" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/>
+</svg></span></footer>
+</main>
+<script>
+const days=[{"date":"11/29","dow":"日","title":"抵達名古屋・榮商圈","desc":"抵達中部國際機場，搭名鐵進市區，展開名古屋第一晚。","events":[["12:00–15:35","桃園 T1 — 中部國際 T1","國泰航空 CX530。15:35 抵達中部國際機場。",[["CX530 航班","note"]]],["抵達後","購買交通卡","媽媽要買交通卡。",[["機場採買","note"]]],["下午","名鐵前往名古屋站","搭名鐵進市區；指定席會有兩張票。車票 ¥980（小票）＋指定席 ¥450，前往飯店。",[["名鐵","train"]]],["入住","ACCESS by LOISIR HOTEL Nagoya","アクセス・バイ・ロワジールホテル 名古屋；辦理入住或寄放行李。",[["住宿","note"]]],["晚餐","鳥開總本家 LACHIC 店","LACHIC 7F 晚餐。",[["美食","food"]]],["飯後","綠洲 21・名古屋電視塔周邊","散步欣賞榮商圈夜景。",[["步行","walk"],["夜景","note"]]],["逛街","Alpen Nagoya・吉伊卡哇鯛魚燒","Alpen Nagoya 看運動／滑雪用品；吉伊卡哇鯛魚燒位於名古屋 PARCO 西館 B1F。",[["購物","note"],["步行","walk"]]]]},{"date":"11/30","dow":"一","title":"香嵐溪賞楓一日遊 🌟","desc":"全程最優先的賞楓日；參加 Klook 一日行程，交通與回程保留彈性。","events":[["07:30","名古屋出發","搭地鐵、轉巴士前往香嵐溪；依 Klook 集合資訊出發。",[["地鐵","train"],["巴士","bus"]]],["上午","香嵐溪・待月橋・巴川沿岸","沿溪散步，欣賞楓紅與河岸景色。",[["步行","walk"],["賞楓","note"]]],["中午","香積寺・足助老街","參訪香積寺，逛足助老街、安排午餐與小吃。",[["步行","walk"],["美食","food"]]],["傍晚","香嵐溪夜間點燈（視體力）","若體力與行程時間允許，再欣賞夜間點燈後返回名古屋。",[["夜楓","note"],["巴士","bus"]]],["晚餐／備案","Narutoya 拉麵","若回程太晚則取消；只收現金。",[["拉麵","food"],["現金","note"]]]]},{"date":"12/01","dow":"二","title":"犬山城・城下町・寂光院","desc":"國寶古城、城下町小吃與山寺楓紅。","events":[["早餐","Coffee House Kako","先吃早餐，再前往名鐵名古屋站。",[["咖啡","food"]]],["出發前","購買犬山城下町套票","在名鐵服務中心購買，參考價格 ¥1,630。",[["套票","note"]]],["08:30","名鐵名古屋站出發","搭名鐵前往犬山。",[["名鐵","train"]]],["上午","三光稻荷神社・犬山城","三光稻荷神社可洗錢；犬山城建於 1537 年，現存最古老木造天守之一，為國寶五城之一。",[["步行","walk"],["神社","note"]]],["點心","牛太郎","犬山小吃推薦：牛太郎，2 貫約 ¥700；可留意套票合作店家的折抵優惠。",[["小吃","food"]]],["中午","犬山城下町","在城下町用餐、逛老街，依喜好使用套票優惠。",[["步行","walk"],["美食","food"]]],["下午","寂光院賞楓","搭接駁車前往寂光院；寺內需爬山，也可考慮搭纜車（約 ¥200）。",[["接駁車","bus"],["步行","walk"],["賞楓","note"]]],["傍晚","返回榮商圈","回名古屋市區，前往 LACHIC。",[["名鐵","train"]]],["晚餐","Shabushabu Yamawarau","LACHIC 8F 壽喜燒，建議事先預約，避免久候。另列黑豚屋炸豬排為備選。",[["壽喜燒","food"],["預約建議","note"]]]]},{"date":"12/02","dow":"三","title":"德川園・大須商店街","desc":"庭園賞楓、神社巡禮與大須美食散策。","events":[["08:30","Ito Coffee 早餐","喝咖啡、吃小倉紅豆奶油；之後搭公車前往德川園。",[["咖啡","food"],["公車","bus"]]],["上午","德川園賞楓","德川家康孫子的後花園；可留意德川園＋名古屋城／白鳥庭園套票。",[["公車","bus"],["賞楓","note"]]],["中午","德川美術館周邊用餐","在德川園、美術館周邊安排午餐。",[["美食","food"]]],["下午","大須觀音・大須商店街","逛大須商店街與周邊店家。",[["地鐵","train"],["步行","walk"]]],["下午點心","鈴木商店","吃炒麵，可加蛋、加菜；用餐後自行回收餐具。",[["小吃","food"]]],["下午","三輪神社","兔子主題神社，參拜時間參考 09:00–17:00。",[["神社","note"],["步行","walk"]]],["晚餐","富士山 55","晚餐備選：台灣拉麵。",[["拉麵","food"]]],["宵夜","手羽先むすめ 大須店","品嚐名古屋特色雞翅。",[["宵夜","food"]]]]},{"date":"12/03","dow":"四","title":"熱田神宮・白鳥庭園・名古屋城","desc":"神宮森林參道、池泉庭園與名古屋城巡禮。","events":[["09:00–10:30","熱田神宮","參拜、漫步森林參道。",[["地鐵","train"],["步行","walk"]]],["10:30–11:00","前往白鳥庭園","由熱田神宮一帶移動至白鳥庭園。",[["步行／交通","walk"]]],["11:00–12:30","白鳥庭園賞楓","欣賞池泉庭園與秋日景色。",[["庭園","note"],["賞楓","note"]]],["12:30–14:00","熱田蓬萊軒午餐","品嚐名古屋鰻魚飯；神宮附近分店參考營業時間 11:30–14:30。",[["鰻魚飯","food"]]],["15:00","名古屋城","參觀名古屋城；你提供的參考開放時間為 09:00–16:30，請留意入場截止時間。",[["地鐵／巴士","train"],["古城","note"]]]]},{"date":"12/04","dow":"五","title":"退房・最後採買・返台","desc":"早上退房寄放行李，中午前往機場，搭乘 CX531 返回台灣。","events":[["10:00","退房・寄放行李","從 ACCESS by LOISIR HOTEL Nagoya 退房，行李寄放飯店。",[["住宿","note"]]],["上午","HARBS 千層蛋糕","安排吃 HARBS 千層蛋糕。",[["甜點","food"]]],["上午","兔子神社・招財貓景點（備選）","視時間安排兔子神社；若時間充裕，再去看招財貓。",[["散步","walk"],["備選景點","note"]]],["午餐","Arancia 或榮商圈簡餐","依當天時間與胃口選擇。",[["午餐","food"]]],["12:00","前往中部國際機場","搭名鐵前往機場；不要走北閘口（沒有電梯），留意無障礙動線與行李。",[["名鐵","train"],["交通提醒","note"]]],["16:40–19:10","中部國際 T1 — 桃園 T1","國泰航空 CX531，16:40 起飛、19:10 抵達。預留報到、退稅與安檢時間。",[["CX531 航班","note"]]]]}];
+// Itinerary date switching is handled by native HTML radio controls; it works without JavaScript.
+// Expense records support both JPY and TWD. The editable rate is a planning estimate, not a live quote.
+const STORAGE_KEY="project_momiji_26_expenses_v1";
+const RATE_KEY="project_momiji_26_exchange_rate_v1";
+const rateInput=document.getElementById("rate");
+let expenses=[];
+let storageMode="none";
+function getStore(){
+ try { localStorage.setItem("__momiji_test","1"); localStorage.removeItem("__momiji_test"); storageMode="local"; return localStorage; } catch(e) {}
+ try { sessionStorage.setItem("__momiji_test","1"); sessionStorage.removeItem("__momiji_test"); storageMode="session"; return sessionStorage; } catch(e) {}
+ return null;
+}
+const budgetStore=getStore();
+try {
+ if(budgetStore){
+  const saved=JSON.parse(budgetStore.getItem(STORAGE_KEY)||"[]");
+  if(Array.isArray(saved)) expenses=saved.filter(e=>e && typeof e.name==="string" && Number(e.amount)>0 && ["JPY","TWD"].includes(e.currency)).map(e=>({name:e.name,amount:Number(e.amount),currency:e.currency}));
+  const savedRate=Number(budgetStore.getItem(RATE_KEY));
+  if(savedRate>0) rateInput.value=String(savedRate);
+
+ }
+} catch(err) { storageMode="none"; }
+function persistBudget(){
+ try {
+  if(!budgetStore) throw new Error("storage unavailable");
+  budgetStore.setItem(STORAGE_KEY,JSON.stringify(expenses));
+  budgetStore.setItem(RATE_KEY,String(Number(rateInput.value)||0.22));
+  document.getElementById("saveStatus").textContent=storageMode==="local"?"✓ 已自動保存於此瀏覽器":"✓ 已暫存於目前瀏覽工作階段；建議定期匯出備份";
+ } catch(err) {
+  document.getElementById("saveStatus").textContent="⚠️ 此預覽環境不支援自動保存，請使用「匯出備份」保留紀錄";
+ }
+}
+function fmt(n){return Number(n).toLocaleString("zh-TW",{maximumFractionDigits:0})}
+function toTwd(e){return e.currency==="JPY"?e.amount*Number(rateInput.value||0):e.amount}
+function updateBudget(){
+ persistBudget();
+ const total=expenses.reduce((s,e)=>s+toTwd(e),0);
+ document.getElementById("total").textContent="NT$ "+fmt(Math.round(total));
+ document.getElementById("share").textContent="每人平均 NT$ "+fmt(Math.round(total/3))+"（3 人分攤）";
+ const list=document.getElementById("expenses");
+ list.innerHTML=expenses.length?expenses.map((e,i)=>`<div class="expense"><span>${e.name}<small>${e.currency==="JPY"?"日圓 JPY":"台幣 TWD"} · 約 NT$ ${fmt(Math.round(toTwd(e)))}</small></span><span>${e.currency==="JPY"?"¥":"NT$"} ${fmt(e.amount)} <button type="button" data-del="${i}">刪除</button></span></div>`).join(""):`<div class="expense"><span>還沒有支出紀錄</span><span>🍡</span></div>`;
+}
+document.getElementById("expenseForm").addEventListener("submit",e=>{e.preventDefault();const name=document.getElementById("expenseName").value.trim(),amount=Number(document.getElementById("expenseAmount").value),currency=document.getElementById("expenseCurrency").value;if(!name||amount<=0)return;expenses.push({name,amount,currency});e.target.reset();updateBudget()});
+document.getElementById("expenses").addEventListener("click",e=>{const i=e.target.dataset.del;if(i!==undefined){expenses.splice(Number(i),1);updateBudget()}});
+rateInput.addEventListener("input",updateBudget);
+document.querySelectorAll(".currency-switch button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".currency-switch button").forEach(x=>x.classList.toggle("active",x===b));document.getElementById("expenseCurrency").value=b.dataset.currency}));
+
+const todoList=document.getElementById("todoList");
+function updateTodos(){const boxes=[...todoList.querySelectorAll('input[type="checkbox"]')],done=boxes.filter(x=>x.checked).length;document.getElementById("todoCount").textContent=`${done} / ${boxes.length} 完成`;document.getElementById("progressBar").style.width=(done/boxes.length*100)+"%";boxes.forEach(x=>x.closest(".todo").classList.toggle("done",x.checked))}
+todoList.addEventListener("change",updateTodos);updateTodos();updateBudget();
+
+
+// Export/import makes records portable even when iPhone file previews block browser storage.
+document.getElementById("exportBudget").addEventListener("click",()=>{
+ const payload={version:1,exchangeRate:Number(rateInput.value)||0.22,expenses};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="project-momiji-26-expenses-backup.json";a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+ document.getElementById("saveStatus").textContent="已匯出記帳備份，請保存 JSON 檔案";
+});
+document.getElementById("importBudget").addEventListener("change",async e=>{
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ try{
+  const data=JSON.parse(await file.text());
+  const list=Array.isArray(data)?data:data.expenses;
+  if(!Array.isArray(list))throw new Error("invalid");
+  expenses=list.filter(x=>x&&typeof x.name==="string"&&Number(x.amount)>0&&["JPY","TWD"].includes(x.currency)).map(x=>({name:x.name,amount:Number(x.amount),currency:x.currency}));
+  if(data.exchangeRate>0)rateInput.value=String(data.exchangeRate);
+  updateBudget();
+  document.getElementById("saveStatus").textContent="✓ 記帳備份匯入成功";
+ }catch(err){document.getElementById("saveStatus").textContent="⚠️ 備份檔格式不正確，無法匯入";}
+ e.target.value="";
+});
+</script>
+</body></html>
